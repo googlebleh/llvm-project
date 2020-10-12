@@ -91,6 +91,11 @@ New checks
   Finds structs that are inefficiently packed or aligned, and recommends
   packing and/or aligning of said structs as needed.
 
+- New :doc:`bugprone-rx-network
+  <clang-tidy/checks/bugprone-rx-network>` check.
+
+  FIXME: add release notes.
+
 - New :doc:`cppcoreguidelines-prefer-member-initializer
   <clang-tidy/checks/cppcoreguidelines-prefer-member-initializer>` check.
 
