@@ -19,17 +19,20 @@ namespace bugprone {
 void RxNetworkCheck::registerMatchers(MatchFinder *Finder) {
   // FIXME: Add matchers.
   const auto socketCall =
-      callExpr(callee(functionDecl(hasName("socket"))));
+      callExpr(callee(functionDecl(hasName("EmitBasicReport"))));
   Finder->addMatcher(socketCall.bind("x"), this);
 }
 
-// #define JOE
+#define JOE
 #ifdef JOE
 
 void RxNetworkCheck::check(const MatchFinder::MatchResult &Result) {
-  const auto *MatchedCall = Result.Nodes.getNodeAs<CallExpr>("x");
+  const auto *matchedCall = Result.Nodes.getNodeAs<CXXMemberCallExpr>("x");
+  const Expr *arg = matchedCall.getArg(3);
+  QualType QT = Arg->getType();
+
   const auto *functionDecl = MatchedCall->getDirectCallee();
-  if (functionDecl and functionDecl->getIdentifier() and functionDecl->getName().equals("socket")) {
+  if (functionDecl and functionDecl->getIdentifier() and functionDecl->getName().equals("EmitBasicReport")) {
     diag(functionDecl->getLocation(), "function %0 is socket") << functionDecl;
   } else {
     diag(functionDecl->getLocation(), "function %0 is not socket") << functionDecl;
